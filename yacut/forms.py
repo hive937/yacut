@@ -23,4 +23,3 @@ class URL_Form(FlaskForm):
         ],
     )
     submit = SubmitField("Создать")
-    
