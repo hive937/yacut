@@ -5,7 +5,7 @@ from flask import flash, redirect, render_template
 
 from yacut import app, db
 from yacut.constants import LENGTH
-from yacut.forms import URL_Form
+from yacut.forms import UrlForm
 from yacut.models import URLMap
 
 
@@ -18,7 +18,9 @@ def check_short_id(short_id):
 
 
 def get_unique_short_id():
-    short_id = "".join(random.choice(string.ascii_letters + string.digits) for i in range(LENGTH))
+    short_id = "".join(
+        random.choice(string.ascii_letters + string.digits) for i in range(LENGTH)
+    )
     if check_short_id(short_id):
         return short_id
     return get_unique_short_id()
@@ -26,7 +28,7 @@ def get_unique_short_id():
 
 @app.route("/", methods=["GET", "POST"])
 def index_view():
-    form = URL_Form()
+    form = UrlForm()
     if not form.validate_on_submit():
         return render_template("index.html", form=form)
     custom_id = form.custom_id.data

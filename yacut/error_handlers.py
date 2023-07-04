@@ -6,7 +6,6 @@ from yacut import app, db
 
 
 class APIErrors(Exception):
-
     status_code = HTTPStatus.BAD_REQUEST
 
     def __init__(self, message, status_code=None):

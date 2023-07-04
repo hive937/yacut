@@ -12,11 +12,12 @@ class URLMap(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=dt.utcnow)
 
     def from_dict(self, data):
-        for field_db, field_inp in {'original': 'url', 'short': 'custom_id'}.items():
+        for field_db, field_inp in {"original": "url", "short": "custom_id"}.items():
             if field_inp in data:
                 setattr(self, field_db, data[field_inp])
 
     def to_dict(self):
         return dict(
             url=self.original,
-            short_link=url_for("index_view", _external=True) + self.short)
+            short_link=url_for("index_view", _external=True) + self.short,
+        )
