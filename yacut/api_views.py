@@ -16,16 +16,19 @@ def create_short_link():
     if not data:
         raise APIErrors("Отсутствует тело запроса", HTTPStatus.BAD_REQUEST)
     if "url" not in data:
-        raise APIErrors('"url" является обязательным полем!', HTTPStatus.BAD_REQUEST)
+        raise APIErrors('"url" является обязательным полем!',
+                        HTTPStatus.BAD_REQUEST)
     if "custom_id" in data:
         custom_id = data.get("custom_id")
         if not check_short_id(custom_id):
-            raise APIErrors(f'Имя "{custom_id}" уже занято.', HTTPStatus.BAD_REQUEST)
+            raise APIErrors(f'Имя "{custom_id}" уже занято.',
+                            HTTPStatus.BAD_REQUEST)
         if custom_id == "" or custom_id is None:
             data["custom_id"] = get_unique_short_id()
         elif not re.match(REG_EXPRESSION, custom_id):
             raise APIErrors(
-                "Указано недопустимое имя для короткой ссылки", HTTPStatus.BAD_REQUEST
+                "Указано недопустимое имя для короткой ссылки",
+                HTTPStatus.BAD_REQUEST
             )
     else:
         data["custom_id"] = get_unique_short_id()
@@ -41,7 +44,8 @@ def get_original_url(short_id):
     try:
         db_object = get_db_object(URLMap.short, short_id).first()
         if db_object is None:
-            return jsonify({"message": "Указанный id не найден"}), HTTPStatus.NOT_FOUND
+            return jsonify({"message": "Указанный id не найден"}),\
+                   HTTPStatus.NOT_FOUND
         return jsonify({"url": db_object.original}), HTTPStatus.OK
     except Exception as e:
         return jsonify({"message": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR

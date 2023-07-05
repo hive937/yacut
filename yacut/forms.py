@@ -17,7 +17,8 @@ class UrlForm(FlaskForm):
         "Пользовательский вариант короткой ссылки",
         validators=[
             Optional(),
-            Length(max=16, message="Длина поля не должна превышать 16 символов."),
+            Length(max=16,
+                   message="Длина поля не должна превышать 16 символов."),
             Regexp(
                 regex=REG_EXPRESSION,
                 message='Допустимы только цифры и буквы "a-Z"',

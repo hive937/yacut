@@ -19,7 +19,9 @@ def check_short_id(short_id):
 
 def get_unique_short_id():
     short_id = "".join(
-        random.choice(string.ascii_letters + string.digits) for i in range(LENGTH)
+        random.choice(
+            string.ascii_letters + string.digits
+        ) for i in range(LENGTH)
     )
     if check_short_id(short_id):
         return short_id
