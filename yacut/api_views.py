@@ -44,8 +44,9 @@ def get_original_url(short_id):
     try:
         db_object = get_db_object(URLMap.short, short_id).first()
         if db_object is None:
-            return jsonify({"message": "Указанный id не найден"}),\
-                   HTTPStatus.NOT_FOUND
+            return jsonify(
+                {"message": "Указанный id не найден"}
+            ),HTTPStatus.NOT_FOUND
         return jsonify({"url": db_object.original}), HTTPStatus.OK
     except Exception as e:
         return jsonify({"message": str(e)}), HTTPStatus.INTERNAL_SERVER_ERROR
